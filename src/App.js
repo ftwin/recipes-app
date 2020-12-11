@@ -7,10 +7,9 @@ const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
 };
-
 function App() {
   const [recipes, setRecipes] = useState([]);
-  useEffect(()=> {
+  useEffect(() => {
     const fetchRecipes = async () => {
       // GET recipes
       const response = await fetch('http://localhost:3000/recipes', {
@@ -20,27 +19,23 @@ function App() {
       const data = await response.json();
       setRecipes(data);
     }
-
     fetchRecipes();
-  }, []) // empty array stops it from being called over and over again
-
+  }, []) //empty array stops it from being called over and over again in an infinite loop. (inside the array it is looking for dependencies, when they change it will re-run the callback function, since it's epty this  will never happen)
 
   return (
     <Router>
       <div className="App">
         <header className="App-header">
-          <h1>Recipes Home</h1>
+        <h1>Recipes</h1>
         </header>
         <main>
-          <div className="recipe-card">
-            {/* {props.text} */}
-          </div>
-          <button>Create a New Recipe</button>
+          <section>
           <Route exact path="/" render={() => <Recipes recipes={recipes} />} />
+          </section>
+           
         </main>
       </div>
     </Router>
-
   );
 }
 
