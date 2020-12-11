@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 //fake database
-const recipes = require('../data');
+// const recipes = require('../data');
+const Recipe = require('../models/recipeModel');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     // response
+    const recipes = await Recipe.find();
     res.json(recipes);
 });
 

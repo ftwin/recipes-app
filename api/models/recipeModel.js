@@ -20,9 +20,12 @@ const recipeSchema = new Schema({
   publishedDate: {
     type: Date,
     default: Date.now,
-  },
+	},
+	// name: String,
+	// directions: String,
+	// ingredients: String,
 });
 
-exports.model = mongoose.model("Recipe", recipeSchema);
-
-recipe.save();
+// exports.model = mongoose.model("Recipe", recipeSchema);
+const Recipe = mongoose.model("Recipe", recipeSchema);
+module.exports = Recipe;

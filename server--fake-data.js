@@ -1,24 +1,12 @@
 const express = require('express');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const recipeRoutes = require('./api/routes/recipeRoutes');
-const mongoose = require('mongoose');
-const uri = 'mongodb://localhost:27017/recipes';
+
 //instantiate an empty express app
 const app = express();
-
-// Connect to database
-mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log(`Successfully connected to: ${uri} `);
-  })
-  .catch( err => {
-    console.log(err.message);
-  })
-
 // adds middleware to parse the BODY of the request. Converts information into json so that we can use it. Creates req.body and puts it there
-// app.use(bodyParser.json());
-app.use(express.json({ extended: false }));
+app.use(bodyParser.json());
+
 
 
 
