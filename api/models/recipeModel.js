@@ -15,9 +15,6 @@ const recipeSchema = new Schema({
     type: Date,
     default: Date.now,
 	},
-	name: String,
-	directions: String,
-	ingredients: String,
 });
 
 // exports.model = mongoose.model("Recipe", recipeSchema);

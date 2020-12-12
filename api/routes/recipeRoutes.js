@@ -15,12 +15,13 @@ router.route('/')
 .post(async (req, res) => {
     try {
         //1. grab new info
-        const { name } = req.body;
+        const { name, ingredients, directions } = req.body;
         // const { name } = req; 
         //2. push to array
         const newRecipe = new Recipe({
-            name: name
-            
+            name: name,
+            ingredients: ingredients,
+            directions
         });
         const recipe = await newRecipe.save();
         res.json(recipe);
