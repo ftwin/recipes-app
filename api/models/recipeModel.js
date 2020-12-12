@@ -3,27 +3,21 @@ const { Schema } = mongoose;
 
 
 const recipeSchema = new Schema({
-  title: String,
+  name: String,
   ingredients: [
     {
-			quanity: String,
+			quantity: String,
 			description: String,
-			required: true,
     }
 	],
-	directions: [
-		{
-			type: String,
-			required: true,
-		}
-	],
+	directions: [String],
   publishedDate: {
     type: Date,
     default: Date.now,
 	},
-	// name: String,
-	// directions: String,
-	// ingredients: String,
+	name: String,
+	directions: String,
+	ingredients: String,
 });
 
 // exports.model = mongoose.model("Recipe", recipeSchema);

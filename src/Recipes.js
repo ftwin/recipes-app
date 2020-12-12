@@ -5,15 +5,15 @@ function Recipes({ recipes }) {
                 return (
                     <div key={recipe._id}>
                         <h3>{recipe.name}</h3>
-                        {/* <ul className="ingredients-list">
-                            {recipes.ingredients.map(ingredient => {
+                        <ul className="ingredients-list">
+                            {recipe.ingredients.map(ingredient => {
                                 return (
-                                    <li key={ingredient.id}>
+                                    <li key={ingredient._id}>
                                         {ingredient.quantity} {ingredient.description}
                                     </li>
                                 )
                             })}
-                        </ul> */}
+                        </ul>
                     </div>
                 )
             })}

@@ -1,32 +1,36 @@
 const express = require('express');
+// const { createRecipe } = require('../recipeController');
 const router = express.Router();
 
 //fake database
 // const recipes = require('../data');
 const Recipe = require('../models/recipeModel');
 
-router.get('/', async (req, res) => {
+router.route('/')
+.get(async (req, res) => {
     // response
     const recipes = await Recipe.find();
     res.json(recipes);
+})
+.post(async (req, res) => {
+    try {
+        //1. grab new info
+        const { name } = req.body;
+        // const { name } = req; 
+        //2. push to array
+        const newRecipe = new Recipe({
+            name: name
+            
+        });
+        const recipe = await newRecipe.save();
+        res.json(recipe);
+        // const recipe = await createRecipe(newRecipe)
+        // res.json({ data: { id }});
+        } catch(err) {
+            console.log(err);
+            res.status(500).json({ message: 'internal server error'})
+        }
+
 });
-
-// router.route('/add')
-// .post((req, res) => {
-//     //1. grab new info
-
-//     const { ingredient, directions, quantity } = req.body; 
-//     //2. push to array
-
-//     recipes.push({
-//         ingredient: ingredient,
-//         directions: directions,
-//         quantity: quantity
-//     });
-//     //3. respond with updated array
-//     res.status(200).send({
-//         data: recipes
-//     });
-// });
 
 module.exports = router;
