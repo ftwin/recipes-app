@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Recipes from './Recipes';
-// import './App.css';
+import RecipeForm from './RecipeForm';
+import './App.css';
+
+
 
 const headers = {
   Accept: "application/json",
@@ -9,6 +12,11 @@ const headers = {
 };
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const onSubmit = () => {
+    setIsFormSubmitted(true);
+  }
+
   useEffect(() => {
     const fetchRecipes = async () => {
       // GET recipes
@@ -20,7 +28,7 @@ function App() {
       setRecipes(data);
     }
     fetchRecipes();
-  }, []) //empty array stops it from being called over and over again in an infinite loop. (inside the array it is looking for dependencies, when they change it will re-run the callback function, since it's epty this  will never happen)
+  }, [isFormSubmitted]) //empty array stops it from being called over and over again in an infinite loop. (inside the array it is looking for dependencies, when they change it will re-run the callback function, since it's epty this  will never happen)
 
   return (
     <Router>
@@ -32,7 +40,9 @@ function App() {
           <section>
           <Route exact path="/" render={() => <Recipes recipes={recipes} />} />
           </section>
-           
+           <section>
+             <RecipeForm onSubmit={onSubmit}/>
+           </section>
         </main>
       </div>
     </Router>

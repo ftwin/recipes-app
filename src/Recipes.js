@@ -4,7 +4,9 @@ function Recipes({ recipes }) {
             {recipes.map(recipe => {
                 return (
                     <div key={recipe._id}>
-                        <h3>{recipe.name}</h3>
+                        <h2>{recipe.name}</h2>
+                        <p>{recipe.summary}</p>
+                        <h3>Ingredients</h3>
                         <ul className="ingredients-list">
                             {recipe.ingredients.map(ingredient => {
                                 return (
@@ -14,6 +16,16 @@ function Recipes({ recipes }) {
                                 )
                             })}
                         </ul>
+                        <h3>Directions</h3>
+                        <ol className="directions">
+                            {recipe.directions.map(direction => {
+                                return (
+                                    <li key={direction._id}>
+                                        {direction}
+                                    </li>
+                                )
+                            })}
+                        </ol>
                     </div>
                 )
             })}
