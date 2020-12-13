@@ -43,7 +43,7 @@ export default function RecipeForm (props) {
   }
 
   return (
-    <div className="recipeForm">
+    <div className="recipe-form">
       <form onSubmit={handleSubmit}>
         <h2>Create a Recipe</h2>
         <label>
@@ -61,21 +61,25 @@ export default function RecipeForm (props) {
             onChange = {e => setSummary(e.target.value)} 
           />
         </label>
-        <label>
-          Ingredient Quantity:
-          <input
-            type = "text"
-            value = {quantity}
-            onChange = {e => setQuantity(e.target.value)} 
-          />
-        </label><label>
-          Ingredient Description:
-          <input
-            type = "text"
-            value = {description}
-            onChange = {e => setDescription(e.target.value)} 
-          />
-        </label>
+        <fieldset>
+          <legend>Ingredients</legend>
+          <label>
+            Quantity:
+            <input
+              className="quantity"
+              type = "text"
+              value = {quantity}
+              onChange = {e => setQuantity(e.target.value)} 
+            />
+          </label><label>
+            Description:
+            <input
+              type = "text"
+              value = {description}
+              onChange = {e => setDescription(e.target.value)} 
+            />
+          </label>
+        </fieldset>
         <label>
           Direction #1:
           <input

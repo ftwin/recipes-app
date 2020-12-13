@@ -40,10 +40,10 @@ function App() {
           <section>
           <Route exact path="/" render={() => <Recipes recipes={recipes} />} />
           </section>
-           <section>
-             <RecipeForm onSubmit={onSubmit}/>
-           </section>
         </main>
+        <section className="recipe-form-container">
+          <RecipeForm onSubmit={onSubmit}/>
+        </section>
       </div>
     </Router>
   );

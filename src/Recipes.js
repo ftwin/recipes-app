@@ -3,7 +3,7 @@ function Recipes({ recipes }) {
         <div className="recipes">
             {recipes.map(recipe => {
                 return (
-                    <div key={recipe._id}>
+                    <div key={recipe._id} className="recipe-card">
                         <h2>{recipe.name}</h2>
                         <p>{recipe.summary}</p>
                         <h3>Ingredients</h3>
