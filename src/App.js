@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const fetchRecipes = async () => {
       // GET recipes
-      const response = await fetch('http://localhost:3000/recipes', {
+      const response = await fetch('/recipes', {
         method: 'GET',
         headers: headers,
       })
