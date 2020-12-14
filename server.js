@@ -2,9 +2,23 @@ const express = require('express');
 // const bodyParser = require('body-parser');
 const recipeRoutes = require('./api/routes/recipeRoutes');
 const mongoose = require('mongoose');
-const uri = 'mongodb://localhost:27017/recipes';
+// const uri = 'mongodb://localhost:27017/recipes';
 //instantiate an empty express app
 const app = express();
+
+// If DB_URI exists, use it OR if it doesn't use this path
+const uri = process.env.DB_URI || 'mongodb://localhost:27017/recipes';
+const PORT = process.env.PORT || "4000";
+
+//heroku
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('./build'));
+  // only add this part if you are using React Router
+  app.get('*', (req,res) =>{
+      console.log(path.join(__dirname+'/build/index.html'));
+      res.sendFile(path.join(__dirname+'/build/index.html'));
+  });
+}
 
 
 // Connect to database
@@ -12,7 +26,7 @@ mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
     console.log(`Successfully connected to: ${uri} `);
-    app.listen(4000, ()=> {
+    app.listen(PORT, ()=> {
       console.log(`server running on port 4000`);
   })
   })
