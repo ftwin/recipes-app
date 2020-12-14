@@ -10,6 +10,12 @@ const app = express();
 const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/recipes';
 const PORT = process.env.PORT || "4000";
 
+// adds middleware to parse the BODY of the request. Converts information into json so that we can use it. Creates req.body and puts it there
+// app.use(bodyParser.json());
+app.use(express.json({ extended: false }));
+app.use('/recipes', recipeRoutes);
+
+
 //heroku
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('./build'));
@@ -34,10 +40,6 @@ mongoose
     console.log(err.message);
   })
 
-// adds middleware to parse the BODY of the request. Converts information into json so that we can use it. Creates req.body and puts it there
-// app.use(bodyParser.json());
-app.use(express.json({ extended: false }));
-app.use('/recipes', recipeRoutes);
 
 
 // app.get('*', (req, res) => {
