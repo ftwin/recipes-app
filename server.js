@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 // If DB_URI exists, use it OR if it doesn't use this path
-const uri = process.env.DB_URI || 'mongodb://localhost:27017/recipes';
+const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/recipes';
 const PORT = process.env.PORT || "4000";
 
 //heroku
@@ -23,9 +23,9 @@ if (process.env.NODE_ENV === 'production') {
 
 // Connect to database
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
-    console.log(`Successfully connected to: ${uri} `);
+    console.log(`Successfully connected to: ${DB_URI} `);
     app.listen(PORT, ()=> {
       console.log(`server running on port 4000`);
   })
