@@ -5,9 +5,9 @@ export default function RecipeForm (props) {
   const [directions, setDirections] = useState("");
   const [quantity, setQuantity] = useState("");
   const [description, setDescription] =useState("")
-  const [ingredients] = [{quantity, description}];
+  const ingredients = [{quantity, description}];
   const [summary, setSummary] = useState("");
-  
+
 
   const createRecipe = async () => {
     try {
@@ -63,7 +63,8 @@ export default function RecipeForm (props) {
         </label>
         <fieldset>
           <legend>Ingredients</legend>
-          <label>
+          <div>
+            <label>
             Quantity:
             <input
               className="quantity"
@@ -71,14 +72,34 @@ export default function RecipeForm (props) {
               value = {quantity}
               onChange = {e => setQuantity(e.target.value)} 
             />
-          </label><label>
-            Description:
+            </label>
+            <label>
+              Description:
+              <input
+                type = "text"
+                value = {description}
+                onChange = {e => setDescription(e.target.value)} 
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+            Quantity:
             <input
+              className="quantity"
               type = "text"
-              value = {description}
-              onChange = {e => setDescription(e.target.value)} 
+              value = {quantity}
+              onChange = {e => setQuantity(e.target.value)} 
             />
-          </label>
+            </label><label>
+              Description:
+              <input
+                type = "text"
+                value = {description}
+                onChange = {e => setDescription(e.target.value)} 
+              />
+            </label>
+          </div>
         </fieldset>
         <label>
           Direction #1:

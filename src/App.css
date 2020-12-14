@@ -78,15 +78,19 @@ form {
   font-weight: 500;
 }
 
-fieldset {
+fieldset { 
+  margin-bottom: 10px;
+}
+
+fieldset div {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 
 fieldset label:last-child {
   flex: 1 1 100%;
   margin-left: 10px;
+  
 }
 
 .quantity {
