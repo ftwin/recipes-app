@@ -1,3 +1,9 @@
+# TO START THE PROJECT
+
+1. Start MongoDB Service in task manager
+2. npm run start --- starts the server
+3. npm run start:client
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

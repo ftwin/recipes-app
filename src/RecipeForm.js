@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import Ingredients from './Ingredients';
 
 export default function RecipeForm (props) {
   const [name, setName] = useState("");
   const [directions, setDirections] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [description, setDescription] =useState("")
+  const [description, setDescription] =useState([]);
+  // let quantity = Ingredients.props;
+  
+  // const description = "";
   const ingredients = [{quantity, description}];
+
+  console.log(quantity);
   const [summary, setSummary] = useState("");
 
 
@@ -42,6 +48,11 @@ export default function RecipeForm (props) {
     setSummary("");
   }
 
+  const handleClick = event => {
+    event.preventDefault();
+    console.log('button click');
+  }
+
   return (
     <div className="recipe-form">
       <form onSubmit={handleSubmit}>
@@ -58,48 +69,13 @@ export default function RecipeForm (props) {
           Recipe Description:
           <textarea
             value = {summary}
-            onChange = {e => setSummary(e.target.value)} 
+            onChange = {e => setSummary(e.target.value)}
           />
         </label>
         <fieldset>
           <legend>Ingredients</legend>
-          <div>
-            <label>
-            Quantity:
-            <input
-              className="quantity"
-              type = "text"
-              value = {quantity}
-              onChange = {e => setQuantity(e.target.value)} 
-            />
-            </label>
-            <label>
-              Description:
-              <input
-                type = "text"
-                value = {description}
-                onChange = {e => setDescription(e.target.value)} 
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-            Quantity:
-            <input
-              className="quantity"
-              type = "text"
-              value = {quantity}
-              onChange = {e => setQuantity(e.target.value)} 
-            />
-            </label><label>
-              Description:
-              <input
-                type = "text"
-                value = {description}
-                onChange = {e => setDescription(e.target.value)} 
-              />
-            </label>
-          </div>
+          <Ingredients setQuantity={ setQuantity } setDescription={ setDescription } />
+          <button onClick={e => handleClick(e)} value="add ingredient">add ingredient</button> 
         </fieldset>
         <label>
           Direction #1:
