@@ -1,4 +1,4 @@
-export default function Ingredients ({ quantity, setQuantity, description, setDescription }) {
+export default function Ingredients ({ quantity, setQuantity, description, setDescription, id }) {
   
   // const [quantity, setQuantity] = useState([]);
   // const [description, setDescription] =useState([])
@@ -15,6 +15,7 @@ export default function Ingredients ({ quantity, setQuantity, description, setDe
         className="quantity"
         type = "text"
         value = {quantity}
+        id = {`quantity${id}`}
         onChange = {e => setQuantity(e.target.value)}
       />
       </label>
@@ -23,6 +24,7 @@ export default function Ingredients ({ quantity, setQuantity, description, setDe
         <input
           type = "text"
           value = {description}
+          id = {`description${id}`}
           onChange = {e => setDescription(e.target.value)} 
         />
       </label>

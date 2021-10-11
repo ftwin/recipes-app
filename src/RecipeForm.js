@@ -5,13 +5,17 @@ export default function RecipeForm (props) {
   const [name, setName] = useState("");
   const [directions, setDirections] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [description, setDescription] =useState([]);
+  const [description, setDescription] =useState("");
+  const [ingredientId, setIngredientId] =useState(0);
+  const [ingredients, setIngredients] = useState([{
+    description: "",
+    quantity: "",
+    id: ingredientId
+  }]);
   // let quantity = Ingredients.props;
   
-  // const description = "";
-  const ingredients = [{quantity, description}];
 
-  console.log(quantity);
+  // console.log(quantity);
   const [summary, setSummary] = useState("");
 
 
@@ -48,9 +52,24 @@ export default function RecipeForm (props) {
     setSummary("");
   }
 
-  const handleClick = event => {
-    event.preventDefault();
-    console.log('button click');
+  // useEffect(()=>{
+  //   console.log({description},{quantity});
+  // },[quantity,description])
+
+  const handleClick = () => {
+    const currentIngredient = [
+      {
+        description: description,
+        quantity: quantity,
+        id: ingredientId
+      },
+      {
+        description: "",
+        quantity: "",
+        id: ingredients.length
+      }
+    ]
+    setIngredients([...ingredients, ...currentIngredient])
   }
 
   return (
@@ -64,6 +83,7 @@ export default function RecipeForm (props) {
             value = {name}
             onChange = {e => setName(e.target.value)} 
           />
+
         </label>
         <label>
           Recipe Description:
@@ -74,8 +94,11 @@ export default function RecipeForm (props) {
         </label>
         <fieldset>
           <legend>Ingredients</legend>
-          <Ingredients setQuantity={ setQuantity } setDescription={ setDescription } />
-          <button onClick={e => handleClick(e)} value="add ingredient">add ingredient</button> 
+          {ingredients.map((ingredient, index) => {
+            return (
+            <Ingredients key={index} id={index} setQuantity={ setQuantity } setDescription={ setDescription } quantity={ ingredient.quantity} description={ ingredient.description} />)
+          })}
+          <button type="button" onClick={e => handleClick(e)} value="add ingredient">add ingredient</button> 
         </fieldset>
         <label>
           Direction #1:
