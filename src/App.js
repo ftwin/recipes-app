@@ -12,10 +12,10 @@ const headers = {
 };
 function App() {
   const [recipes, setRecipes] = useState([]);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const onSubmit = () => {
-    setIsFormSubmitted(true);
-  }
+  const [isFormSubmitted, setIsFormSubmitted] = useState();
+  // const onSubmit = () => {
+  //   setIsFormSubmitted(true);
+  // }
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -28,7 +28,10 @@ function App() {
       setRecipes(data);
     }
     fetchRecipes();
+
   }, [isFormSubmitted]) //empty array stops it from being called over and over again in an infinite loop. (inside the array it is looking for dependencies, when they change it will re-run the callback function, since it's epty this  will never happen)
+
+  // setIsFormSubmitted(false)
 
   return (
     <Router>
@@ -42,7 +45,7 @@ function App() {
           </section>
         </main>
         <section className="recipe-form-container">
-          <RecipeForm onSubmit={onSubmit}/>
+          <RecipeForm isFormSubmitted={isFormSubmitted} setIsFormSubmitted={setIsFormSubmitted}/>
         </section>
       </div>
     </Router>

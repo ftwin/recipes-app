@@ -1,21 +1,40 @@
-export default function Ingredients ({ quantity, setQuantity, description, setDescription, id }) {
+import { useEffect, useState } from "react";
+export default function Ingredients ({ id, ingredientInputs, setIngredientInputs, isFormSubmitted }) {
   
-  // const [quantity, setQuantity] = useState([]);
-  // const [description, setDescription] =useState([])
-  // const ingredients = [{quantity: "1", description: "bananas"},{quantity, description}];
+  const [quantity, setQuantity] = useState('');
+  const [description, setDescription] = useState('')
+  // const newArray = [...ingredientInputs];
 
-  // console.log(quantity);
-  // console.log(props.quantity);
+  // setIngredientInputs(newArray)
+  // const [newArray, setNewArray] = useState(ingredientInputs);
+  const [newArray, setNewArray] = useState(ingredientInputs);
+  console.log(newArray)
+  
+  if (newArray) {
+    setNewArray(()=> {
+      // console.log('test')
+      const currentObject = newArray.find(obj => obj.id === id);
+      currentObject.quantity = quantity;
+      currentObject.description = description;
+    })
+  }
+  
+  // useEffect(()=> {
+  // },[quantity, description, newArray])
+
+  useEffect(()=> {
+    setQuantity('');
+    setDescription('')
+  }, [isFormSubmitted]);
 
   return (
-    <div>
+    <div key={id}>
       <label>
       Quantity:
       <input
         className="quantity"
         type = "text"
         value = {quantity}
-        id = {`quantity${id}`}
         onChange = {e => setQuantity(e.target.value)}
       />
       </label>
@@ -24,7 +43,6 @@ export default function Ingredients ({ quantity, setQuantity, description, setDe
         <input
           type = "text"
           value = {description}
-          id = {`description${id}`}
           onChange = {e => setDescription(e.target.value)} 
         />
       </label>

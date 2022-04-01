@@ -20,7 +20,7 @@ function Recipes({ recipes }) {
                         <ol className="directions">
                             {recipe.directions.map(direction => {
                                 return (
-                                    <li key={direction._id}>
+                                    <li key={direction}>
                                         {direction}
                                     </li>
                                 )

@@ -14,10 +14,9 @@ const recipeSchema = new Schema({
 	directions: [String],
   publishedDate: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
 	},
 });
 
-// exports.model = mongoose.model("Recipe", recipeSchema);
 const Recipe = mongoose.model("Recipe", recipeSchema);
 module.exports = Recipe;

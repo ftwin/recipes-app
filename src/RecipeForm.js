@@ -1,27 +1,29 @@
 import { useState } from 'react';
 import Ingredients from './Ingredients';
 
-export default function RecipeForm (props) {
+export default function RecipeForm ({isFormSubmitted, setIsFormSubmitted}) {
   const [name, setName] = useState("");
   const [directions, setDirections] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [description, setDescription] =useState("");
-  const [ingredientId, setIngredientId] =useState(0);
-  const [ingredients, setIngredients] = useState([{
-    description: "",
-    quantity: "",
-    id: ingredientId
-  }]);
-  // let quantity = Ingredients.props;
-  
+  class ingredientTemplate {
+    constructor() {
+      this.id = Math.floor(Math.random() * 123456789 * Math.random())
+      this.quantity = "";
+      this.description = "";
+    }
+  }
+  const addIngredientInputs = () => {
+    let newInputs = [];
+    for (let i = 0; i < 3; i++) {
+      newInputs.push(new ingredientTemplate());
+    }
+    return newInputs;
+  }
 
-  // console.log(quantity);
+  const [ingredientInputs, setIngredientInputs] = useState(addIngredientInputs());
   const [summary, setSummary] = useState("");
-
-
   const createRecipe = async () => {
     try {
-      const body = { name, summary, ingredients, directions }
+      const body = { name, summary, ingredientInputs, directions }
       const response = await fetch('/recipes', {
         method: 'POST',
         headers: {
@@ -29,7 +31,6 @@ export default function RecipeForm (props) {
         },
         body: JSON.stringify(body),
       });
-      console.log(JSON.stringify(body));
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
@@ -43,33 +44,16 @@ export default function RecipeForm (props) {
   const handleSubmit = event => {
     event.preventDefault();
     createRecipe();
-    props.onSubmit();
     console.log(`form submitted: ${name}`);
     setName("");
     setDirections("");
-    setQuantity("");
-    setDescription("");
     setSummary("");
+    setIngredientInputs(addIngredientInputs());
+    setIsFormSubmitted(event);
   }
 
-  // useEffect(()=>{
-  //   console.log({description},{quantity});
-  // },[quantity,description])
-
   const handleClick = () => {
-    const currentIngredient = [
-      {
-        description: description,
-        quantity: quantity,
-        id: ingredientId
-      },
-      {
-        description: "",
-        quantity: "",
-        id: ingredients.length
-      }
-    ]
-    setIngredients([...ingredients, ...currentIngredient])
+    setIngredientInputs([...ingredientInputs, ...addIngredientInputs()]);
   }
 
   return (
@@ -94,11 +78,11 @@ export default function RecipeForm (props) {
         </label>
         <fieldset>
           <legend>Ingredients</legend>
-          {ingredients.map((ingredient, index) => {
+          {ingredientInputs.map((ingredient, index) => {
             return (
-            <Ingredients key={index} id={index} setQuantity={ setQuantity } setDescription={ setDescription } quantity={ ingredient.quantity} description={ ingredient.description} />)
+            <Ingredients key={index} id={ingredient.id} ingredientInputs={ingredientInputs} setIngredientInputs={setIngredientInputs} isFormSubmitted={isFormSubmitted}/>)
           })}
-          <button type="button" onClick={e => handleClick(e)} value="add ingredient">add ingredient</button> 
+          <button type="button" onClick={e => handleClick(e)} value="add ingredient">add more ingredients</button> 
         </fieldset>
         <label>
           Direction #1:
