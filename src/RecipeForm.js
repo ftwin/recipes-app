@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Ingredients from './Ingredients';
 
-export default function RecipeForm ({isFormSubmitted, setIsFormSubmitted}) {
+export default function RecipeForm ({setIsFormSubmitted}) {
   const [name, setName] = useState("");
   const [directions, setDirections] = useState("");
   class ingredientTemplate {
@@ -19,11 +19,24 @@ export default function RecipeForm ({isFormSubmitted, setIsFormSubmitted}) {
     return newInputs;
   }
 
+  const cleanIngredientsData = (ingredients) => {
+    // only save ingredients input fields with data filled in
+    const cleanData = ingredients.filter(ingredient => {
+      return ingredient.quantity || ingredient.description;
+    })
+    return cleanData;
+  }
+
+  
   const [ingredientInputs, setIngredientInputs] = useState(addIngredientInputs());
+  const cleanIngredients = cleanIngredientsData(ingredientInputs)
+  console.log(cleanIngredients);
+  console.log(ingredientInputs);
   const [summary, setSummary] = useState("");
   const createRecipe = async () => {
     try {
-      const body = { name, summary, ingredientInputs, directions }
+      const body = { name, summary, cleanIngredients, directions }
+      console.log(body);
       const response = await fetch('/recipes', {
         method: 'POST',
         headers: {
@@ -50,6 +63,12 @@ export default function RecipeForm ({isFormSubmitted, setIsFormSubmitted}) {
     setSummary("");
     setIngredientInputs(addIngredientInputs());
     setIsFormSubmitted(event);
+  }
+
+  const handleChange = (index, event) => {
+    let data = [...ingredientInputs];
+    data[index][event.target.name] = event.target.value;
+    setIngredientInputs(data);
   }
 
   const handleClick = () => {
@@ -80,7 +99,7 @@ export default function RecipeForm ({isFormSubmitted, setIsFormSubmitted}) {
           <legend>Ingredients</legend>
           {ingredientInputs.map((ingredient, index) => {
             return (
-            <Ingredients key={index} id={ingredient.id} ingredientInputs={ingredientInputs} setIngredientInputs={setIngredientInputs} isFormSubmitted={isFormSubmitted}/>)
+            <Ingredients key={ingredient.id} ingredient={ingredient} handleChange={handleChange} index={index}/>)
           })}
           <button type="button" onClick={e => handleClick(e)} value="add ingredient">add more ingredients</button> 
         </fieldset>

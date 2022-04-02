@@ -1,49 +1,24 @@
-import { useEffect, useState } from "react";
-export default function Ingredients ({ id, ingredientInputs, setIngredientInputs, isFormSubmitted }) {
-  
-  const [quantity, setQuantity] = useState('');
-  const [description, setDescription] = useState('')
-  // const newArray = [...ingredientInputs];
-
-  // setIngredientInputs(newArray)
-  // const [newArray, setNewArray] = useState(ingredientInputs);
-  const [newArray, setNewArray] = useState(ingredientInputs);
-  console.log(newArray)
-  
-  if (newArray) {
-    setNewArray(()=> {
-      // console.log('test')
-      const currentObject = newArray.find(obj => obj.id === id);
-      currentObject.quantity = quantity;
-      currentObject.description = description;
-    })
-  }
-  
-  // useEffect(()=> {
-  // },[quantity, description, newArray])
-
-  useEffect(()=> {
-    setQuantity('');
-    setDescription('')
-  }, [isFormSubmitted]);
+export default function Ingredients ({ ingredient, handleChange, index }) {
 
   return (
-    <div key={id}>
+    <div index={index}>
       <label>
       Quantity:
       <input
         className="quantity"
+        name = 'quantity'
         type = "text"
-        value = {quantity}
-        onChange = {e => setQuantity(e.target.value)}
+        value = {ingredient.quantity}
+        onChange = {event => handleChange(index, event)}
       />
       </label>
       <label>
         Description:
         <input
+          name = 'description'
           type = "text"
-          value = {description}
-          onChange = {e => setDescription(e.target.value)} 
+          value = {ingredient.description}
+          onChange = {event => handleChange(index, event)} 
         />
       </label>
     </div>
